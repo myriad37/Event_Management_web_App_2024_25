@@ -1,4 +1,4 @@
-# Event-Management-Application
+# Event-Management_Application_2024_25
 
 ## Group Members
 
