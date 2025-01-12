@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planify: Admin Dashboard</title>
+    <script src="/assets/js/tailwind.min.js"></script>
+
+</head>
+<body>
+<header>
+  <nav class="bg-gray-800">
+    <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+      <div class="relative flex h-16 items-center justify-between">
+        <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+          <!-- Mobile menu button-->
+          <button type="button" id="menu-toggle" class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+            <span class="absolute -inset-0.5"></span>
+            <span class="sr-only">Open main menu</span>
+            <!--
+              Icon when menu is closed.
+  
+              Menu open: "hidden", Menu closed: "block"
+            -->
+            <svg class="block h-6 w-6"  id="menu-show-btn" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            </svg>
+            <!--
+              Icon when menu is open.
+  
+              Menu open: "block", Menu closed: "hidden"
+            -->
+            <svg class="hidden h-6 w-6" id="menu-close-btn" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+          <div class="flex flex-shrink-0 items-center">
+            <img class="h-10 w-auto" src="../assets/img/logo0.png" alt="Taatee">
+          </div>
+          <div class="hidden sm:ml-6 sm:block">
+            <div class="flex space-x-4">
+              <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+              <a href="#" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Admin Dashboard</a>
+              <a href="/index.html" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Home</a>
+              <a href="/events.html" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Events</a>
+              <a href="/team.html" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Team</a>
+            </div>
+          </div>
+        </div>
+        <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+          <button type="button" id="user-menu" class="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+            <span class="absolute -inset-1.5"></span>
+            <span class="sr-only">Open User Menu</span>
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+              <path d="M4 22C4 17.5817 7.58172 14 12 14C16.4183 14 20 17.5817 20 22H18C18 18.6863 15.3137 16 12 16C8.68629 16 6 18.6863 6 22H4ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13ZM12 11C14.21 11 16 9.21 16 7C16 4.79 14.21 3 12 3C9.79 3 8 4.79 8 7C8 9.21 9.79 11 12 11Z"></path>
+            </svg>            
+          </button>
+  
+          <!-- Profile dropdown -->
+          <div class="relative ml-3">
+            <div>
+              <button type="button" class="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
+                <span class="absolute -inset-1.5"></span>
+                <span class="sr-only">Open user menu</span>
+                <i class="ri-user-line"></i>
+              </button>
+            </div>
+  
+            <!--
+              Dropdown menu, show/hide based on menu state.
+  
+              Entering: "transition ease-out duration-100"
+                From: "transform opacity-0 scale-95"
+                To: "transform opacity-100 scale-100"
+              Leaving: "transition ease-in duration-75"
+                From: "transform opacity-100 scale-100"
+                To: "transform opacity-0 scale-95"
+            -->
+            <div id="user-menu-list" class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+              <!-- Active: "bg-gray-100", Not Active: "" -->
+              <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
+              <a href="#" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Mobile menu, show/hide based on menu state. -->
+    <div class="sm:hidden hidden" id="mobile-menu">
+      <div class="space-y-1 px-2 pb-3 pt-2">
+        <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+        <a href="#" class="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium" aria-current="page">Dashboard</a>
+        <a href="/index.html" class="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium" aria-current="page">Home</a>
+        <a href="/event.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Events</a>
+        <a href="/team.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Team</a>
+        <!-- <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium"></a> -->
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+<section class="bg-white dark:bg-gray-900">
+    <!-- Quote from the founders to future admins -->
+    <!-- User Resgitered Events List ( in Cards ) -->
+    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+      <div class="max-w-4xl mx-auto">
+        <blockquote class="p-4 my-4 mb-0 border-s-4 border-gray-300 bg-gray-50 dark:border-gray-500 dark:bg-gray-800">
+          <p class="text-sm italic font-medium leading-relaxed text-gray-900 dark:text-white">
+            "Dear Future Admin, Our Tech Club dictates strong sense of freedom and thinking and values privacy greatly. Wanting to leave our legacy in this club, we (the founders) have collectively decided to give Administrators no power over users. You can only view!"
+          </p>
+        </blockquote>
+        <div class="flex items-center divide-x-2 rtl:divide-x-reverse divide-gray-500 dark:divide-gray-700 mb-4 mt-1">
+          <cite class="pe-3 font-medium text-gray-900 dark:text-white mx-2">- The Founders</cite>
+          <cite class="ps-3 text-sm text-gray-500 dark:text-gray-400 pl-2">AAiT, 2025 G.C.</cite>
+      </div>
+    </div>
+
+      <div class="max-w-3xl mx-auto">
+        <div class="bg-white dark:bg-gray-900 overflow-hidden shadow sm:rounded-lg">
+          <div class="px-4 py-5 sm:px-6">
+            <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">Users List</h3>
+            <p class="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">List of Registered Users </p>
+         </div>
+
+    <div class="relative overflow-x-auto overflow-y-auto max-h-96 shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        Name
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Role
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Number of Bookings
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="usersContainer">
+                <!-- <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" class="flex items-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <div class="ps-3">
+                            <div class="text-base font-semibold" id="userName">Jese Leos</div>
+                            <div class="font-normal text-gray-500" id="userEmail">jese@flowbite.com</div>
+                        </div>
+                    </th>
+                    <td class="px-6 py-4" id="userRole">
+                    </td>
+                    <td class="px-6 py-4" id="userBookings">
+                    </td>
+                </tr> -->
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<section class="bg-white dark:bg-gray-900">
+    <!-- User Resgitered Events List ( in Cards ) -->
+    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mx-auto">
+        <div class="bg-white dark:bg-gray-900 overflow-hidden shadow sm:rounded-lg">
+          <div class="px-4 py-5 sm:px-6">
+            <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">Events List</h3>
+            <p class="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">List of Events </p>
+          </div>
+        
+
+        <div class="relative overflow-x-auto  overflow-y-auto max-h-96 shadow-md sm:rounded-lg">
+            <!-- Add Event Button -->
+            <table class="min-w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+              <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                  <tr>
+                      <th scope="col" class="px-6 py-3">
+                          Event Name
+                      </th>
+                      <th scope="col" class="px-6 py-3">
+                          Location
+                      </th>
+                      <th scope="col" class="px-6 py-3">
+                          Date
+                      </th>
+                      <th scope="col" class="px-6 py-3">
+                          Status
+                      </th>
+                      <th scope="col" class="px-6 py-3">
+                          Total Bookings
+                      </th>
+                      <th scope="col" class="px-6 py-3">
+                          Action
+                      </th>
+                  </tr>
+              </thead>
+              <tbody id="eventsTableBody">
+                  <!-- Table Row will be added dynamically, Until Then Default -->
+                  <tr>
+                      <td colspan="6">
+                          <div class="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg">
+                              <div class="px-4 py-5 sm:p-6">
+                                  <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">
+                                      No Events Available.
+                                  </h3>
+                                  <div class="mt-2 max-w-xl text-sm text-gray-500 dark:text-gray-400">
+                                      <p>
+                                          You have not created an event yet. Click the button below to create a new event.
+                                      </p>
+                                  </div>
+                              </div>
+                          </div>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+    </div>
+    <div class="flex justify-end">
+      <button id="addEventBtn" type="button" class="items-center px-4 py-2 mt-4 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+          Add Event
+      </button>
+  </div>
+</section>
+
+<!-- OWN ACCOUNT DETAILS -->
+<section class="bg-white dark:bg-gray-900">
+      <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto">
+          <div class="bg-white dark:bg-gray-900 overflow-hidden shadow sm:rounded-lg">
+            <div class="px-4 py-5 sm:px-6">
+              <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">Edit Account Details</h3>
+              <p class="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">Edit your account details below.</p>
+            </div>
+
+          <div id="accountContainer">
+            <!-- Will be filled dynamically from TypeScript -->
+          </div>
+      </div>
+</section>
+
+<!-- Delete My Account Section (Button Activates only when user fully types, DELETE MY ACCOUNT )-->
+<section class="bg-blue-900 to-blue-900:bg-gray-900">
+  <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+    <div class="max-w-3xl mx-auto">
+      <div class="bg-white dark:bg-gray-900 overflow-hidden shadow sm:rounded-lg">
+        <div class="px-4 py-5 sm:px-6">
+          <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">Delete My Account</h3>
+          <p class="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">Delete your account below.</p>
+        </div>
+        <div id="overlay" class="overlay"></div>
+        <div id="deleteAccountContainer">
+          <!-- Will be hard coded -->
+          <div class="px-4 py-5 sm:px-6">
+            <div class="flex justify-center flex-col items-center">
+              <!-- Notice Text -->
+              <p class="mt-1 max-w-2xl text-sm text-gray-500 dark:text-gray-400">This action is irreversible. You will lose all your data and will not be able to recover it.</p>
+              <button id="deleteAccountBtn" type="button" class="items-center px-4 py-2 mt-4 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                Delete My Account
+              </button>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+ <div id="errorContainer" class="fixed top-0 right-0 m-4"></div>
+</main>
+
+ <footer class="p-4 bg-white md:p-4 lg:p-8 dark:bg-gray-800">
+  <div class="mx-auto max-w-screen-xl text-center">
+      <a href="#" class="flex justify-center items-center text-2xl font-semibold text-gray-900 dark:text-white">
+          Planify
+      </a>
+      <p class="my-2 text-gray-500 dark:text-gray-400">Event Booking System For Tech Eventify Solution &copy;2025.</p>
+      <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2024-2025 <a href="#" class="hover:underline">Tech Eventify Solution™</a>. All Rights Reserved.</span>
+  </div>
+</footer>
+
+<!-- POPUP MODALS -->
+<!-- Create Event Modal -->
+<div id="eventModal" class="hidden fixed w-full top-1/2 left-1/2  transform -translate-x-1/2 -translate-y-1/2 bg-transparent shadow-md z-50 max-w-full md:max-w-md">
+<div class="relative p-4 w-full max-w-full sm:max-w-md max-h-full">
+  <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <!-- Modal header -->
+      <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+              Add Event
+          </h3>
+          <button type="button" id="closeEventModalBtn" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="crud-modal">
+              <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+              </svg>
+              <span class="sr-only">Close modal</span>
+          </button>
+      </div>
+  <!-- Modal body -->
+  <form class="p-4 md:p-5" id="eventModalForm">
+      <div class="grid gap-4 mb-4 grid-cols-2">
+          <div class="col-span-2">
+              <label for="eventName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Event Name</label>
+              <input type="text" name="eventName" id="eventName" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Event Title Here" required="">
+          </div>
+          <div class="col-span-2 sm:col-span-1">
+              <label for="eventDate" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Event Date</label>
+              <input type="date" name="eventDate" id="eventDate" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Event Date Here" required="">
+          </div>
+          <div class="col-span-2 sm:col-span-1">
+              <label for="maxBooking" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Max Booking</label>
+              <input type="number" name="maxBooking" id="maxBooking" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="100" value="100" required="">
+          </div>
+          <div class="col-span-2 sm:col-span-2">
+            <div class="col-span-2">
+              <label for="eventLocation" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Event Location</label>
+              <input type="text" name="eventName" id="eventLocation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Event Location Here" required="">
+          </div>
+          </div>
+          <div class="col-span-2">
+              <label for="eventDdescription" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Event Description</label>
+              <textarea id="eventDescription" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Event Description"></textarea>                    
+          </div>
+      </div>
+      <button type="submit" id=confirmEventCreationBtn" class="text-white inline-flex self-center items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
+          Add Event
+      </button>
+  </form>
+  </div>
+</div>
+</div>
+<!-- Create Event Modal -->
+
+<!-- Edit Event Modal -->
+<div id="editEventModal" class="hidden fixed w-full top-1/2 left-1/2  transform -translate-x-1/2 -translate-y-1/2 bg-transparent shadow-md z-50 max-w-full md:max-w-md">
+  <div class="relative p-4 w-full max-w-full sm:max-w-md max-h-full">
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <!-- Modal header -->
+        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                Edit Event
+            </h3>
+            <button type="button" id="closeEditEventModalBtn" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="crud-modal">
+                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                </svg>
+                <span class="sr-only">Close modal</span>
+            </button>
+        </div>
+    <!-- Modal body -->
+    <form class="p-4 md:p-5" id="editEventModalForm">
+      <!-- Hidden inputs -->
+      <input type="hidden" id="editEventId" name="editEventId" value="">
+        <div class="grid gap-4 mb-4 grid-cols-2">
+            <div class="col-span-2">
+                <label for="editEventName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Event Name</label>
+                <input type="text" name="editEventName" id="editEventName" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Event Title Here" required="">
+            </div>
+            <div class="col-span-2 sm:col-span-1">
+                <label for="editEventDate" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Event Date</label>
+                <input type="date" name="editEventDate" id="editEventDate" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Event Date Here" required="">
+            </div>
+            <div class="col-span-2 sm:col-span-1">
+                <label for="editMaxBooking" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Max Booking</label>
+                <input type="number" name="editMaxBooking" id="editMaxBooking" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="100" value="100" required="">
+            </div>
+            <div class="col-span-2 sm:col-span-2">
+              <div class="col-span-2">
+                <label for="editEventLocation" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Event Location</label>
+                <input type="text" name="editEventName" id="editEventLocation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Event Location Here" required="">
+            </div>
+            </div>
+            <div class="col-span-2">
+                <label for="editEventDdescription" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Event Description</label>
+                <textarea id="editEventDescription" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Event Description"></textarea>                    
+            </div>
+        </div>
+        <button type="submit" id="confirmEventEditionBtn" class="text-white inline-flex self-center items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
+            Save Changes
+        </button>
+    </form>
+    </div>
+  </div>
+  </div>
+
+
+<!-- -->
+<script src="/assets/js/admin.bundle.js"></script>
+</body>
+</html>
